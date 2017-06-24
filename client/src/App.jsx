@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Random from './components/Random'
+import logo from './logo.svg'
+import './App.css'
 
 const App = () => (
   <div className="App">
@@ -8,9 +9,7 @@ const App = () => (
       <img src={logo} className="App-logo" alt="logo" />
       <h2>Push si !</h2>
     </div>
-    <p className="App-intro">
-      Test react deploy
-    </p>
+    <Random />
   </div>
 )
 
