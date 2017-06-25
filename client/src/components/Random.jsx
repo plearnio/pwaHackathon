@@ -1,4 +1,28 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const FButton = styled.button`
+  width: 200px;
+  padding: 20px;
+  border: 3px dashed rgba(255,255,255,0.5);
+  background-color: transparent;
+  color: white;
+  font-size: 120%;
+`
+const FMeter = styled.div`
+  width: 200px;
+  padding: 20px;
+  background-color: transparent;
+  color: white;
+  font-size: 130%;
+`
+const Result = styled.div`
+  width: 200px;
+  padding: 20px;
+  background-color: transparent;
+  color: white;
+  font-size: 110%;
+`
 
 const style = {
   width: 100,
@@ -31,12 +55,16 @@ class Random extends Component {
     this.addOne = this.addOne.bind(this)
     this.stopTimer = this.stopTimer.bind(this)
     this.Toggle = this.Toggle.bind(this)
+    this.setData = this.props.setData
+    this.getResult = this.props.getResult
+    this.setData = this.setData.bind(this)
+    this.getResult = this.getResult.bind(this)
     this.random()
   }
 
   addOne() {
     this.setState({ F: this.state.F + 2 })
-    this.timer = setTimeout(this.addOne, 20)
+    this.timer = setTimeout(this.addOne, 5)
   }
 
   Toggle() {
@@ -47,7 +75,7 @@ class Random extends Component {
   }
 
   check() {
-    console.log(this.state.Sx)
+    this.getResult(this.state)
     if (this.state.Sx <= this.state.S2 && this.state.Sx >= this.state.S1) {
       this.setState({ isCorrect: true, F: 0 }, () => {
         console.log(this.state.isCorrect)
@@ -72,6 +100,7 @@ class Random extends Component {
     this.state.uk = (Math.random() * (0.5 - 0.1)) + 0.1
     this.state.us = (Math.random() * (0.5 - 0.1)) + 0.1
     this.state.S1 = this.state.S2 - this.state.x
+    this.setData(this.state)
     this.setState(this.state)
   }
 
@@ -94,23 +123,25 @@ class Random extends Component {
           this.check()
         })
       })
+    } else {
+      this.setState({
+        isMove: false,
+        isCorrect: false,
+        F: 0
+      }, () => {
+        this.getResult(this.state)
+        this.random()
+      })
     }
   }
 
   render() {
     return (
       <div>
-        <div> {this.state.F}</div>
-        <button onClick={this.Toggle} style={style}>+</button>
-        <div>{this.state.isToggle && 'asd'}</div>
-        <div> a1 {this.state.a1} </div>
-        <div> a2 {this.state.a2} </div>
-        <div> us {this.state.us} </div>
-        <div> uk {this.state.uk} </div>
-        <div> S {this.state.Sx} </div>
-        <div> S1 {this.state.S1}</div>
-        <div> S2 {this.state.S2}</div>
-        <div> x {this.state.x}</div>
+        <FMeter> F = {this.state.F}</FMeter>
+        <FButton onClick={this.Toggle}> PUSH SI !</FButton>
+        <FMeter> Your S = { Number((this.state.Sx).toFixed(2)) }</FMeter>
+        { this.state.isCorrect ? (<Result> Correct !</Result>) : (<Result> Calculate F until Correct !</Result>)}
       </div>
     )
   }

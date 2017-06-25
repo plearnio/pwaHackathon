@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Grid, Col, Row } from 'react-bootstrap'
+import { Motion, spring } from 'react-motion'
 
 import Background from '../static/images/box-bg60.png'
 
-console.log(Background)
 
 const CoverMainZone = styled.div`
   width: 100%;
@@ -53,11 +53,11 @@ const Floor = styled.div`
   float: left;
 `
 
-const Us = styled.span`
+const TAndM = styled.span`
   float: left;
   padding: 5px;
 `
-const Uk = styled.span`
+const S = styled.span`
   float: left;
   padding: 5px;
   margin-left: 100px;
@@ -80,25 +80,58 @@ const EndZone = styled.div`
   padding: 5px;
   height: 60px;
   background-color: #3f3f46;
+  border: 2px dashed white;
 `
 
 const x = 5
 
 
-const PlayZone = ({ Data }) => (
-  <CoverMainZone>
-    <MainZone>
-      <Box />
-      <Nothing>
-        <StartPoint> { '<-' } Start here </StartPoint>
-        <EndPoint style={{ marginLeft: `${(Data[0] * 200) - 284}` }} > End here { '->' }</EndPoint>
-        <EndZone style={{ width: `${((Data[1] - Data[0]) * 200)}` }} > ! </EndZone>
-      </Nothing>
-      <Floor style={{ borderTop: `${x}px dashed rgba(255,255,255,0.5)` }} >
-        <Us> ú(s) = 0.1</Us><Uk> ú(k) = 0.1 </Uk>
-      </Floor>
-    </MainZone>
-  </CoverMainZone>
-)
+class PlayZone extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    this.setState({ open: !this.state.open });
+  }
+
+  render() {
+    const { Data } = this.props
+    console.log(Data)
+    return (
+      <CoverMainZone>
+        <MainZone>
+          <Motion style={{ x: spring(this.state.open ? 2000 : 0) }} >
+            {({ x }) =>
+              <Box
+                style={{
+                  zIndex: '100',
+                  WebkitTransform: `translate3d(${x}px, 0, 0)`,
+                  transform: `translate3d(${x}px, 0, 0)`,
+                  transitionDuration: '1s',
+                  transitionTimingFunction: 'linear',
+                }}
+              />
+            }
+          </Motion>
+          <Nothing>
+            <StartPoint> { '<-' } Start here <br /></StartPoint>
+            <EndPoint style={{ marginLeft: `${(Data.S1 * 200) - 284}`, marginTop : `20px` }} > End here { '->' }</EndPoint>
+            <EndZone style={{ width: `${((Data.S2 - Data.S1) * 200)}` }} />
+          </Nothing>
+          <Floor style={{ borderTop: `${Data.uk * 10}px dashed rgba(255,255,255,0.5)` }} >
+            <TAndM> ú(s) = { Number((Data.us).toFixed(2)) }, ú(k) = { Number((Data.uk).toFixed(2)) }, t = 0.3s, m = 40kg</TAndM><S>{'< '}---------------- S = [ { Number((Data.S1).toFixed(2)) } to { Number((Data.S2).toFixed(2)) } ] m ---------------{' >'}</S>
+          </Floor>
+          {/*<button onClick={this.handleClick}> click !@@@</button>*/}
+        </MainZone>
+      </CoverMainZone>
+    )
+  }
+}
 
 export default PlayZone
