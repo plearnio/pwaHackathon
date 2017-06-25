@@ -1,15 +1,32 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Push Si !",
+  "name": "Push Si !",
+  "background_color": "#1e1e1e",
+  "color": "#eee",
+  "description": "A physic game on pwa",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "logo.jpg",
+      "sizes": "48x48",
+      "type": "image/jpg"
+    },
+    {
+      "src": "logo.jpg",
+      "sizes": "96x96",
+      "type": "image/jpg"
+    },
+    {
+      "src": "logo.jpg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpg"
+    },
+    {
+      "src": "logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#000000"
 }
